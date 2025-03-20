@@ -16,11 +16,13 @@
 
 # Misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-.env
+/frontend/.env
+/backend/.env
 *.pyc
 
 # Logs
@@ -32,4 +34,7 @@ yarn-error.log*
 .idea
 .vscode
 *.swp
-*.swo 
+*.swo
+
+# Database
+*.sqlite3 

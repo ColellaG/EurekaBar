@@ -1,0 +1,8 @@
+[build]
+builder = "NIXPACKS"
+buildCommand = "cd backend && pip install -r requirements.txt"
+
+[deploy]
+startCommand = "cd backend && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn bar_menu.wsgi"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3 

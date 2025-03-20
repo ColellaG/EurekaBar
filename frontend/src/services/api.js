@@ -1,39 +1,23 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api';
-
 const api = axios.create({
-  baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
 });
 
 export const getCategories = async () => {
-  const response = await api.get('/categories/');
-  return response.data;
+  try {
+    const response = await api.get('/categories/');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    throw error;
+  }
 };
 
-export const getProducts = async (categoryId = null) => {
-  let allProducts = [];
-  let currentPage = 1;
-  const params = categoryId ? { category: categoryId, page: currentPage } : { page: currentPage };
-
+export const getProducts = async () => {
   try {
-    while (true) {
-      const response = await api.get('/products/', { params });
-      const data = response.data;
-      allProducts = [...allProducts, ...data.results];
-      
-      if (!data.next) {
-        break;
-      }
-      
-      currentPage += 1;
-      params.page = currentPage;
-    }
-
-    return allProducts;
+    const response = await api.get('/products/');
+    return response.data;
   } catch (error) {
     console.error('Error fetching products:', error);
     throw error;
@@ -71,4 +55,6 @@ export const updateCategory = async (id, categoryData) => {
 
 export const deleteCategory = async (id) => {
   await api.delete(`/categories/${id}/`);
-}; 
+};
+
+export default api; 
