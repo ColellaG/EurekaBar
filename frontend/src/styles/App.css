@@ -357,7 +357,7 @@ footer .border-top {
 
 /* Añadir imagen de fondo */
 body {
-  background-image: url('/background.jpg');
+  background-image: url('/EurekaFondo.png');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
