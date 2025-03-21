@@ -17,22 +17,29 @@ const categoryDescriptions = {
 };
 
 export function Menu() {
-  const [expandedCategory, setExpandedCategory] = useState(null);
+  const [expandedCategories, setExpandedCategories] = useState([]);
   const { categories, loading: isLoadingCategories, error: errorCategories } = useCategories();
   const { products, loading: isLoadingProducts, error: errorProducts } = useProducts();
 
   useEffect(() => {
-    // Expandir la primera categoría automáticamente cuando se cargan
-    if (categories && categories.length > 0 && !expandedCategory) {
-      setExpandedCategory(categories[0].id);
+    // Expandir todas las categorías automáticamente cuando se cargan
+    if (categories && categories.length > 0) {
+      const allCategoryIds = categories.map(category => category.id);
+      setExpandedCategories(allCategoryIds);
     }
     
     console.log('Categories:', categories);
     console.log('Products:', products);
-  }, [categories, products, expandedCategory]);
+  }, [categories, products]);
 
   const toggleCategory = (categoryId) => {
-    setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
+    setExpandedCategories(prev => {
+      if (prev.includes(categoryId)) {
+        return prev.filter(id => id !== categoryId);
+      } else {
+        return [...prev, categoryId];
+      }
+    });
   };
 
   if (isLoadingCategories || isLoadingProducts) {
@@ -85,7 +92,7 @@ export function Menu() {
         <div className="accordion">
           {categories.map((category) => {
             const categoryProducts = productsByCategory[category.id] || [];
-            const isExpanded = expandedCategory === category.id;
+            const isExpanded = expandedCategories.includes(category.id);
             
             return (
               <div key={category.id} className="accordion-item mb-3">
