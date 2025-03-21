@@ -1,8 +1,30 @@
 import axios from 'axios';
 
+// Obtener la URL base de la API desde variables de entorno o usar localhost por defecto
+const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+
+// Crear una instancia de axios con la configuración necesaria
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
+  baseURL,
+  withCredentials: false, // No enviamos cookies para evitar problemas CORS
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  }
 });
+
+// Interceptor para manejar errores
+api.interceptors.response.use(
+  response => response,
+  error => {
+    // Si hay un error CORS, lo manejamos mejor
+    if (error.message === 'Network Error') {
+      console.error('Error de CORS o red:', error);
+      console.log('Attempting to access API at:', baseURL);
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const getCategories = async () => {
   try {
