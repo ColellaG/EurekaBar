@@ -22,11 +22,8 @@ export function Menu() {
   const { products, loading: isLoadingProducts, error: errorProducts } = useProducts();
 
   useEffect(() => {
-    // Expandir todas las categorías automáticamente cuando se cargan
-    if (categories && categories.length > 0) {
-      const allCategoryIds = categories.map(category => category.id);
-      setExpandedCategories(allCategoryIds);
-    }
+    // Inicializar con un array vacío para que todas las categorías estén contraídas
+    setExpandedCategories([]);
     
     console.log('Categories:', categories);
     console.log('Products:', products);
