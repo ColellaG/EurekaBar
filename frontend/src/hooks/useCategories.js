@@ -9,12 +9,24 @@ export const useCategories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+        setLoading(true);
         const data = await getCategories();
-        setCategories(data.results || []);
+        console.log('Raw categories data:', data);
+        
+        // Manejar tanto respuestas paginadas como no paginadas
+        if (data.results && Array.isArray(data.results)) {
+          setCategories(data.results);
+        } else if (Array.isArray(data)) {
+          setCategories(data);
+        } else {
+          setCategories([]);
+          console.error('Formato de respuesta no esperado:', data);
+        }
+        
         setError(null);
       } catch (err) {
+        console.error('Error al cargar categorías:', err);
         setError('Error al cargar las categorías');
-        console.error(err);
       } finally {
         setLoading(false);
       }

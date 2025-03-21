@@ -13,11 +13,20 @@ export const useProducts = (categoryId = null) => {
       try {
         setLoading(true);
         setError(null);
-        const productList = await getProducts(categoryId);
+        const data = await getProducts(categoryId);
         
         if (isMounted) {
-          console.log('Fetched products:', productList);
-          setProducts(productList);
+          console.log('Raw products data:', data);
+          
+          // Manejar tanto respuestas paginadas como no paginadas
+          if (data.results && Array.isArray(data.results)) {
+            setProducts(data.results);
+          } else if (Array.isArray(data)) {
+            setProducts(data);
+          } else {
+            setProducts([]);
+            console.error('Formato de respuesta no esperado:', data);
+          }
         }
       } catch (err) {
         console.error('Error fetching products:', err);
