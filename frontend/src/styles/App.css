@@ -49,6 +49,11 @@ main {
   background-color: #FFFFFF;
   cursor: pointer;
   transition: all 0.2s ease;
+  font-family: 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #465563 !important;
 }
 
 .accordion-button:not(.collapsed) {
@@ -110,7 +115,7 @@ main {
   background: #FFFFFF;
   border-bottom: 1px solid #e9ecef;
   padding: 1rem 1.5rem;
-  transition: background-color 0.2s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .product-card:last-child {
@@ -118,7 +123,8 @@ main {
 }
 
 .product-card:hover {
-  background-color: #f8f9fa;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .product-name {
@@ -347,4 +353,40 @@ footer .border-top {
 
 .card:hover .card-img-top {
   opacity: 0.9;
+}
+
+/* Añadir imagen de fondo */
+body {
+  background-image: url('/background.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  position: relative;
+  color: #465563;
+  font-family: 'Roboto', sans-serif;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(107, 124, 140, 0.75); /* Aumentar opacidad para mejor contraste */
+  z-index: -1;
+}
+
+.app {
+  position: relative;
+  min-height: 100vh;
+  z-index: 1;
+}
+
+.menu-container {
+  background-color: rgba(255, 255, 255, 0.95); /* Más opaco para mejor contraste */
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  margin-bottom: 2rem;
 } 

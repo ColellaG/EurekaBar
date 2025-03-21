@@ -77,56 +77,59 @@ export function Menu() {
   }
 
   return (
-    <>
-      <header className="menu-header text-center">
-        <div className="container">
-          <h1>Nuestro Menú</h1>
-          <p className="lead">Descubre nuestra variedad de opciones preparadas con ingredientes frescos</p>
-        </div>
-      </header>
+    <div className="container py-4">
+      {isLoadingCategories || isLoadingProducts && <Spinner />}
+      {errorCategories || errorProducts && <p className="text-danger">{errorCategories || errorProducts}</p>}
       
-      <main className="container py-4">
-        <div className="accordion">
-          {categories.map((category) => {
-            const categoryProducts = productsByCategory[category.id] || [];
-            const isExpanded = expandedCategories.includes(category.id);
-            
-            return (
-              <div key={category.id} className="accordion-item mb-3">
-                <h2 className="accordion-header">
-                  <button 
-                    className={`accordion-button ${!isExpanded ? 'collapsed' : ''}`}
-                    type="button"
-                    onClick={() => toggleCategory(category.id)}
-                  >
-                    <span className="category-title">{category.name}</span>
-                    {category.description && (
-                      <span className="text-muted d-none d-md-block ms-2">
-                        {category.description}
-                      </span>
-                    )}
-                  </button>
-                </h2>
-                <div 
-                  className={`accordion-collapse collapse ${isExpanded ? 'show' : ''}`}
-                >
-                  <div className="accordion-body p-0">
-                    <div className="product-list">
-                      {categoryProducts.length > 0 ? (
-                        categoryProducts.map((product) => (
-                          <ProductCard key={product.id} product={product} />
-                        ))
-                      ) : (
-                        <p className="text-muted p-3">No hay productos disponibles en esta categoría</p>
+      {!isLoadingCategories && !isLoadingProducts && !errorCategories && !errorProducts && (
+        <div className="menu-container">
+          <div className="menu-header text-center mb-5">
+            <h1 className="display-4">Casa Eureka</h1>
+            <p className="lead">Sabores que inspiran momentos únicos</p>
+          </div>
+          
+          <div className="accordion">
+            {categories.map((category) => {
+              const categoryProducts = productsByCategory[category.id] || [];
+              const isExpanded = expandedCategories.includes(category.id);
+              
+              return (
+                <div key={category.id} className="accordion-item mb-3">
+                  <h2 className="accordion-header">
+                    <button 
+                      className={`accordion-button ${!isExpanded ? 'collapsed' : ''}`}
+                      type="button"
+                      onClick={() => toggleCategory(category.id)}
+                    >
+                      <span className="category-title">{category.name}</span>
+                      {category.description && (
+                        <span className="text-muted d-none d-md-block ms-2">
+                          {category.description}
+                        </span>
                       )}
+                    </button>
+                  </h2>
+                  <div 
+                    className={`accordion-collapse collapse ${isExpanded ? 'show' : ''}`}
+                  >
+                    <div className="accordion-body p-0">
+                      <div className="product-list">
+                        {categoryProducts.length > 0 ? (
+                          categoryProducts.map((product) => (
+                            <ProductCard key={product.id} product={product} />
+                          ))
+                        ) : (
+                          <p className="text-muted p-3">No hay productos disponibles en esta categoría</p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </main>
-    </>
+      )}
+    </div>
   );
 } 
