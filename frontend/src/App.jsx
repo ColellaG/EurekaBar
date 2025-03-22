@@ -33,6 +33,8 @@ function App() {
         <main className="container py-4">
           <div className="menu-header">
             <img src="/images/logo.png" alt="Casa Eureka" className="main-logo" />
+            <p>Café & Restaurante</p>
+            <p className="subtitle">Un rincón acogedor en Yerba Buena, Tucumán</p>
           </div>
           
           <Routes>
