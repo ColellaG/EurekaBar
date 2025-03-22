@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 // Usar variable de entorno si está disponible, sino usar localhost
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL = 'http://localhost:8000/api';
 
 // Crear una instancia de Axios con la configuración base
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  withCredentials: false, // Importante para evitar problemas de CORS
+  withCredentials: false,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -30,6 +30,7 @@ axiosInstance.interceptors.response.use(
 export const getCategories = async () => {
   try {
     const response = await axiosInstance.get('/categories/');
+    console.log('Respuesta de categorías:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error al obtener categorías:', error);
@@ -40,6 +41,7 @@ export const getCategories = async () => {
 export const getProducts = async () => {
   try {
     const response = await axiosInstance.get('/products/');
+    console.log('Respuesta de productos:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error al obtener productos:', error);
