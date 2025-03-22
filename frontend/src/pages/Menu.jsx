@@ -83,10 +83,7 @@ export function Menu() {
       
       {!isLoadingCategories && !isLoadingProducts && !errorCategories && !errorProducts && (
         <div className="menu-container">
-          <div className="menu-header text-center mb-5">
-            <h1 className="display-4">Casa Eureka</h1>
-            <p className="lead">Sabores que inspiran momentos únicos</p>
-          </div>
+          
           
           <div className="accordion">
             {categories.map((category) => {
