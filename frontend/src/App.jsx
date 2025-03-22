@@ -32,8 +32,8 @@ function App() {
         />
         <main className="container py-4">
           <div className="menu-header">
-            <img src="/images/EurekaLogo.png" alt="Casa Eureka" className="main-logo" />
-            </div>
+            <img src="/images/logo.png" alt="Casa Eureka" className="main-logo" />
+          </div>
           
           <Routes>
             <Route path="/" element={<Menu />} />
